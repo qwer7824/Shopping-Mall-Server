@@ -1,10 +1,14 @@
 package com.shoppingmallserver.Item;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface ItemRepository extends JpaRepository<Item, Integer> {
+@Repository
+public interface ItemRepository extends JpaRepository<Item, Long> {
 
-    List<Item> findByIdIn(List<Integer> ids);
+
+    List<Item> findByIdIn(List<Long> ids);
 }

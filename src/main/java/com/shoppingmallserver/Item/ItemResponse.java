@@ -1,31 +1,33 @@
 package com.shoppingmallserver.Item;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Item {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ItemResponse {
+
+    public ItemResponse(Item item) {
+        this.id = item.getId();
+        this.name = item.getName();
+        this.imgPath = item.getImgPath();
+        this.price = item.getPrice();
+        this.content = item.getContent();
+    }
+
     private Long id;
 
-    @Column
     private String name;
 
-    @Column
     private String imgPath;
 
-    @Column
     private int price;
 
-    @Column
     private String content;
+
 }
