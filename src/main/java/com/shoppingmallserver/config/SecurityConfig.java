@@ -64,7 +64,7 @@ public class SecurityConfig {
 
                 // 조건별로 요청 허용/제한 설정
                 http.authorizeHttpRequests()
-                .requestMatchers("/register", "/login","/img/**","/items").permitAll()
+                .requestMatchers("/register", "/login","/img/**","/items","/additem").permitAll()
                 // /admin으로 시작하는 요청은 ADMIN 권한이 있는 유저에게만 허용
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 // /user 로 시작하는 요청은 USER 권한이 있는 유저에게만 허용
