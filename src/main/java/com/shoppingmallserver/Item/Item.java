@@ -2,16 +2,10 @@ package com.shoppingmallserver.Item;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Entity
 @Getter
-@Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,4 +22,17 @@ public class Item {
 
     @Column
     private String content;
+
+    public static Item fromEntity(ItemEntity entity){ //Entity -> DTO
+        return new Item(
+                entity.getId(),
+                entity.getName(),
+                entity.getImgPath(),
+                entity.getPrice(),
+                entity.getContent()
+        );
+    }
+
+
+
 }
