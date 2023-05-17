@@ -42,4 +42,14 @@ public class CartService {
         return items;
     }
 
+    public void removeCartItem(Long itemId, String account) {
+
+        Member member = memberRepository.findByAccount(account).orElseThrow(() ->
+                new BadCredentialsException("잘못된 계정정보입니다."));
+
+        Cart cart = cartRepository.findByMemberIdAndItemId(member.getAccount(), itemId);
+
+        cartRepository.delete(cart);
+    }
+
 }

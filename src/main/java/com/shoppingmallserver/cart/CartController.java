@@ -31,4 +31,11 @@ public class CartController {
         return ResponseEntity.ok().body(cartService.getCartItems(principal.getName()).stream().toList());
     }
 
+
+    @DeleteMapping("/user/cart/items/{itemId}")
+    public ResponseEntity removeCartItem(
+            @PathVariable("itemId") Long itemId,Principal principal) {
+        cartService.removeCartItem(itemId, principal.getName());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
