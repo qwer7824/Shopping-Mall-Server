@@ -1,6 +1,10 @@
 package com.shoppingmallserver.Item;
 
+import com.shoppingmallserver.Member.Member;
 import com.shoppingmallserver.Member.SignRequest;
+import com.shoppingmallserver.Member.SignResponse;
+import com.shoppingmallserver.Member.SignService;
+import com.shoppingmallserver.cart.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +22,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemController {
 
-    private final ItemRepository itemRepository;
     private final ItemService itemService;
 
     @GetMapping("/items")
@@ -45,5 +48,6 @@ public class ItemController {
         itemService.delete(itemId);
         return ResponseEntity.noContent().build();
     }
+
 
 }

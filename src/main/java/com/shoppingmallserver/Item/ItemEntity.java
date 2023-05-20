@@ -27,15 +27,6 @@ public class ItemEntity {
     @Column
     private String content;
 
-    public static ItemEntity of(String name, String imgPath, Integer price , String content){
-        ItemEntity item = new ItemEntity();
-        item.setName(name);
-        item.setImgPath(imgPath);
-        item.setPrice(price);
-        item.setContent(content);
-        return item;
-
-    }
 
 
 
