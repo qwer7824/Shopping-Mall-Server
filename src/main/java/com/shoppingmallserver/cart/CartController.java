@@ -18,9 +18,9 @@ public class CartController {
     @PostMapping("/user/cart/items/{itemId}")
     public ResponseEntity pushCartItem(
             @PathVariable("itemId") Long itemId,
-            Principal principal) {
+            Principal principal,@RequestBody CartRequest request) {
         log.info("{}",principal.getName());
-        cartService.pushCartItem(itemId, principal.getName());
+        cartService.pushCartItem(itemId, principal.getName(),request.getCount());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

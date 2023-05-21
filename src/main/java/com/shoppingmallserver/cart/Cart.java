@@ -2,6 +2,7 @@ package com.shoppingmallserver.cart;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Setter
@@ -19,4 +20,7 @@ public class Cart {
     @Column
     private Long itemId;
 
+    @ColumnDefault("0")
+    private Integer count;
+    
 }
