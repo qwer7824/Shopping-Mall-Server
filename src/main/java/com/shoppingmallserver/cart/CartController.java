@@ -34,11 +34,14 @@ public class CartController {
         return ResponseEntity.ok().body(cartService.getCartItems(principal.getName(),pageable));
     }
 
-    @GetMapping("/user/cart/item")
-    public ResponseEntity getCartItem(Principal principal) {
+    @DeleteMapping("/user/cart/items/{cartId}")
+    public ResponseEntity deleteCart(Principal principal,@PathVariable("cartId") Integer cartId){
         log.info("{}",principal.getName());
-        return ResponseEntity.ok().body(cartRepository.findAll());
+        cartService.deleteCart(principal.getName(),cartId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
 
 
 }

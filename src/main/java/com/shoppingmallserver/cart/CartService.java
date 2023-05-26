@@ -59,11 +59,22 @@ public class CartService {
         return cartRepository.findAllByMemberId(member.getId(),pageable).map(CartResponseDto::toDto);
     }
 
+    public void deleteCart(String account,Integer cartId) {
+        Member member = getUserEntityOrException(account); // 유저찾기
+
+        Cart cart = cartRepository.findById(cartId).orElseThrow(() ->
+                new BadCredentialsException("잘못된 카트 입니다."));
+
+        if(member.getId() == cart.getMember().getId()) {
+            cartRepository.delete(cart);
+        }
+    }
 
 
     public Member getUserEntityOrException(String account){
         return memberRepository.findByAccount(account).orElseThrow(() ->
                 new BadCredentialsException(String.format("%s not founded", account)));
     }
+
 
 }
