@@ -27,7 +27,15 @@ public class ItemEntity {
     @Column
     private String content;
 
-
+    public static ItemEntity fromEntity(ItemEntity entity){ //Entity -> DTO
+        return new ItemEntity(
+                entity.getId(),
+                entity.getName(),
+                entity.getImgPath(),
+                entity.getPrice(),
+                entity.getContent()
+        );
+    }
 
 
 }

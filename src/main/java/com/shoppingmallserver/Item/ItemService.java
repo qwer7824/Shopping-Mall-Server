@@ -1,9 +1,13 @@
 package com.shoppingmallserver.Item;
 
+import com.shoppingmallserver.Exception.BaseException;
+import com.shoppingmallserver.Exception.ResultType;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
@@ -13,45 +17,45 @@ import java.util.List;
 public class ItemService {
 
     private final ItemRepository itemRepository;
-
+    private final ModelMapper modelMapper;
 
     public List<ItemEntity> allItemView() {
         return itemRepository.findAll();
     }
 
-    public ItemEntity getProductDetails(Long id) {
+    public ItemResponse getProductDetails(Long id) {
+        ItemEntity itemEntity = itemRepository.findById(id).orElseThrow(()->{
+            throw new BaseException(ResultType.SYSTEM_ERROR);
+        });
+        return modelMapper.map(itemEntity,ItemResponse.class);
+    }
 
-        return itemRepository.findById(id).get();
+    public ItemResponse addItem(ItemRequest request) {
+
+       ItemEntity itemEntity = modelMapper.map(request,ItemEntity.class);
+
+        ItemEntity saved = itemRepository.save(itemEntity);
+
+        return modelMapper.map(saved, ItemResponse.class);
     }
 
     @Transactional
-    public String additem(ItemRequest request) {
-        itemRepository.save(ItemEntity.builder()
-                .name(request.getName())
-                .imgPath(request.getImgPath())
-                .price(request.getPrice())
-                .content(request.getContent())
-                .build());
-        return "상품이 추가되었습니다.";
-    }
-
-    @Transactional
-    public Item modify(ItemRequest request, Long itemId) {
+    public ItemEntity modify(ItemRequest request, Long itemId) {
         ItemEntity itemEntity = itemRepository.findById(itemId).orElseThrow(() ->
-                new BadCredentialsException("잘못된 아이템 번호 입니다."));
+                new BaseException(ResultType.SYSTEM_ERROR));
 
         itemEntity.setName(request.getName());
         itemEntity.setImgPath(request.getImgPath());
         itemEntity.setPrice(request.getPrice());
         itemEntity.setContent(request.getContent());
 
-        return Item.fromEntity(itemRepository.save(itemEntity));
+        return itemRepository.save(itemEntity);
     }
 
     @Transactional
     public void delete(Long itemId) {
         ItemEntity itemEntity = itemRepository.findById(itemId).orElseThrow(() ->
-                new BadCredentialsException("잘못된 아이템 번호 입니다."));
+                new BaseException(ResultType.SYSTEM_ERROR));
         itemRepository.delete(itemEntity);
     }
 

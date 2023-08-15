@@ -5,6 +5,7 @@ import com.shoppingmallserver.Member.SignRequest;
 import com.shoppingmallserver.Member.SignResponse;
 import com.shoppingmallserver.Member.SignService;
 import com.shoppingmallserver.cart.CartService;
+import com.shoppingmallserver.config.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,8 @@ import org.springframework.security.core.Authentication;
 import java.io.IOException;
 import java.util.List;
 
+import static com.shoppingmallserver.config.ResponseDTO.ok;
+
 @RestController
 @RequiredArgsConstructor
 public class ItemController {
@@ -25,28 +28,28 @@ public class ItemController {
     private final ItemService itemService;
 
     @GetMapping("/items")
-    public ResponseEntity<?> getitems() {
-        return ResponseEntity.ok().body(itemService.allItemView());
+    public ResponseDTO<List<ItemEntity>> getItems() {
+        return ok(itemService.allItemView());
     }
+
     @PostMapping(value = "/admin/additem")
-    public ResponseEntity<String> additem(@RequestBody ItemRequest request) {
-        return new ResponseEntity<>(itemService.additem(request), HttpStatus.OK);
+    public ResponseDTO<ItemResponse> addItem(@RequestBody ItemRequest request) {
+        return ok(itemService.addItem(request));
     }
 
     @GetMapping("/item/{itemId}")
-    public ResponseEntity<?> getProductDetails(@PathVariable Long itemId) {
-
-        return ResponseEntity.ok().body(itemService.getProductDetails(itemId));
+    public ResponseDTO<ItemResponse> getProductDetails(@PathVariable Long itemId) {
+        return ok(itemService.getProductDetails(itemId));
     }
 
     @PutMapping("/admin/{itemId}")
-    public ResponseEntity<Item> modify(@PathVariable Long itemId, @RequestBody ItemRequest request){
-        return new ResponseEntity<>(itemService.modify(request, itemId),HttpStatus.OK);
+    public ResponseDTO<ItemEntity> modify(@PathVariable Long itemId, @RequestBody ItemRequest request){
+        return ok(itemService.modify(request,itemId));
     }
     @DeleteMapping("/admin/{itemId}")
-    public ResponseEntity<Void> delete(@PathVariable Long itemId){
+    public ResponseDTO<Void> delete(@PathVariable Long itemId){
         itemService.delete(itemId);
-        return ResponseEntity.noContent().build();
+        return ok();
     }
 
 

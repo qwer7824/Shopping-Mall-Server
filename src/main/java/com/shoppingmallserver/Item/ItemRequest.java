@@ -3,11 +3,11 @@ package com.shoppingmallserver.Item;
 import lombok.*;
 
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Setter
+@Builder
 public class ItemRequest {
-
-
-    private Long id;
 
     private String name;
 
@@ -15,6 +15,6 @@ public class ItemRequest {
 
     private int price;
 
-    private String Content;
+    private String content;
 
 }

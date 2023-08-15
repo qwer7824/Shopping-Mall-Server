@@ -10,7 +10,5 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<ItemEntity,Long> {
 
 
-    List<Item> findByIdIn(List<Long> ids);
-
     ItemEntity findItemById(Long id);
 }
